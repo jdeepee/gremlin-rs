@@ -411,12 +411,11 @@ impl TraversalBuilder {
         self
     }
 
-    pub fn map<A>(mut self, step: A) -> Self
+    pub fn project<A>(mut self, step: A) -> Self
     where
-        A: IntoByStep,
+        A: IntoSelectStep,
     {
         self.bytecode
-            .add_step(String::from("map"), step.into_step().take_params());
-        self
+            .add_step(String::from("project"), step.into_step().take_params());
     }
 }

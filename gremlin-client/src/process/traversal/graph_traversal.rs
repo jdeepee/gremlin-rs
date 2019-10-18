@@ -427,11 +427,12 @@ impl<S, E: FromGValue, T: Terminator<E>> GraphTraversal<S, E, T> {
         self
     }
 
-    pub fn map<A>(mut self, step: A) -> Self
+    pub fn project<A>(mut self, step: A) -> GraphTraversal<S, GValue, T>
     where
-        A: IntoByStep,
+        A: IntoSelectStep,
+        T: Terminator<GValue>,
     {
-        self.builder = self.builder.map(step);
-        self
+        self.builder = self.builder.project(step);
+        GraphTraversal::new(self.terminator, self.builder)
     }
 }
