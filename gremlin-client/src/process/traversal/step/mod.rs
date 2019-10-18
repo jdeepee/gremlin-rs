@@ -4,6 +4,5 @@ pub mod has;
 pub mod limit;
 pub mod match_step;
 pub mod not;
-pub mod or;
 pub mod select;
 pub mod where_step;

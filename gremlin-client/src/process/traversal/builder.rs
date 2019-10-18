@@ -4,7 +4,6 @@ use crate::process::traversal::step::has::IntoHasStep;
 use crate::process::traversal::step::limit::LimitStep;
 use crate::process::traversal::step::match_step::IntoMatchStep;
 use crate::process::traversal::step::not::IntoNotStep;
-use crate::process::traversal::step::or::IntoOrStep;
 use crate::process::traversal::step::select::IntoSelectStep;
 use crate::process::traversal::step::where_step::IntoWhereStep;
 
@@ -402,12 +401,8 @@ impl TraversalBuilder {
         self
     }
 
-    pub fn or<A>(mut self, step: A) -> Self
-    where
-        A: IntoOrStep,
-    {
-        self.bytecode
-            .add_step(String::from("or"), step.into_step().take_params());
+    pub fn or(mut self) -> Self {
+        self.bytecode.add_step(String::from("or"), vec![]);
         self
     }
 
