@@ -16,6 +16,7 @@ pub enum GremlinError {
     Request((i16, String)),
     Serde(serde_json::Error),
     Uuid(ParseError),
+    MapError(String),
 }
 
 impl From<WebSocketError> for GremlinError {

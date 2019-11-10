@@ -8,7 +8,7 @@ impl List {
         List(elements)
     }
 
-    pub(crate) fn take(self) -> Vec<GValue> {
+    pub fn take(self) -> Vec<GValue> {
         self.0
     }
 

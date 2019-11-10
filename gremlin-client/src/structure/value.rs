@@ -45,6 +45,12 @@ pub enum GValue {
     TextP(TextP),
 }
 
+//This would be a trait used to make a bulk property addition to a given graphtraversal - this could be implemented by the user (in the future by a proc_macro) to easily convert their struct to the right
+//type ready to be used in a property_many insert
+pub trait ToInsertable {
+    fn to_insertable() -> Vec<(String, GValue)>;
+}
+
 impl GValue {
     pub fn take<T>(self) -> GremlinResult<T>
     where
@@ -201,9 +207,9 @@ impl From<BTreeMap<String, GValue>> for GValue {
     }
 }
 
-impl From<Vec<GValue>> for GValue {
-    fn from(val: Vec<GValue>) -> Self {
-        GValue::List(List::new(val))
+impl<T: Into<GValue>> From<Vec<T>> for GValue {
+    fn from(val: Vec<T>) -> Self {
+        GValue::List(val.into_iter().map(|v| v.into()).collect::<Vec<GValue>>().into())
     }
 }
 

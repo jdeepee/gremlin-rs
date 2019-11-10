@@ -636,7 +636,7 @@ mod tests {
 
         let result = deserializer_v3(&value).expect("Failed to deserialize a Path");
 
-        let empty: GValue = vec![].into();
+        let empty: GValue = GValue::List(vec![].into());
 
         let path = Path::new(
             vec![empty.clone(), empty.clone(), empty.clone()].into(),

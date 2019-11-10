@@ -54,7 +54,7 @@
 
 mod client;
 mod connection;
-mod conversion;
+pub mod conversion;
 mod error;
 mod io;
 mod message;
@@ -69,7 +69,7 @@ pub type GremlinResult<T> = Result<T, error::GremlinError>;
 
 pub use structure::{
     Edge, GKey, GResultSet, GValue, IntermediateRepr, List, Map, Metric, Path, Property, Token,
-    TraversalExplanation, TraversalMetrics, Vertex, VertexProperty, GID,
+    TraversalExplanation, TraversalMetrics, Vertex, VertexProperty, GID, TryFromGremlinMap,
 };
 pub mod process;
 pub mod structure;
