@@ -38,8 +38,8 @@ where
         self.executor.clone()
     }
 
-    fn is_valid(&self, _conn: Self::Connection) -> AnyFuture<Self::Connection, Self::Error> {
-        unimplemented!()
+    fn is_valid(&self, conn: Self::Connection) -> AnyFuture<Self::Connection, Self::Error> {
+        Box::pin(Ok(conn))
     }
 
     fn has_broken(&self, _conn: &mut Option<Self::Connection>) -> bool {
