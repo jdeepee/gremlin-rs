@@ -39,7 +39,10 @@ where
     }
 
     fn is_valid(&self, conn: Self::Connection) -> AnyFuture<Self::Connection, Self::Error> {
-        Box::pin(Ok(conn))
+        let async_ok = async move {
+            Ok(conn)
+        };
+        Box::pin(async_ok)
     }
 
     fn has_broken(&self, _conn: &mut Option<Self::Connection>) -> bool {
