@@ -1,9 +1,11 @@
 use crate::process::traversal::step::has::IntoHasStep;
 use crate::process::traversal::step::loops::LoopsStep;
 use crate::process::traversal::step::not::IntoNotStep;
+use crate::process::traversal::step::or::IntoOrStep;
 use crate::process::traversal::step::select::IntoSelectStep;
 use crate::process::traversal::TraversalBuilder;
-use crate::structure::{GIDs, Labels};
+use crate::process::traversal::step::where_step::IntoWhereStep;
+use crate::structure::{GIDs, Labels, IntoPredicate};
 use crate::GValue;
 
 pub struct AnonymousTraversalSource {
@@ -68,6 +70,11 @@ impl AnonymousTraversalSource {
         self.traversal.clone().out_e(labels)
     }
 
+    pub fn out_v(&self) -> TraversalBuilder
+    {
+        self.traversal.clone().out_v()
+    }
+
     pub fn values<L>(&self, labels: L) -> TraversalBuilder
     where
         L: Into<Labels>,
@@ -121,6 +128,31 @@ impl AnonymousTraversalSource {
         A: IntoSelectStep,
     {
         self.traversal.clone().select(step)
+    }
+
+    pub fn is<A>(&self, val: A) -> TraversalBuilder
+    where
+        A: IntoPredicate,
+    {
+        self.traversal.clone().is(val)
+    }
+
+    pub fn or<A>(&self, step: A) -> TraversalBuilder
+    where
+        A: IntoOrStep,
+    {
+        self.traversal.clone().or(step)
+    }
+
+    pub fn where_<A>(&self, step: A) -> TraversalBuilder
+    where
+        A: IntoWhereStep,
+    {
+        self.traversal.clone().where_(step)
+    }
+
+    pub fn cap(&self, step: &'static str) -> TraversalBuilder {
+        self.traversal.clone().cap(step)
     }
 }
 

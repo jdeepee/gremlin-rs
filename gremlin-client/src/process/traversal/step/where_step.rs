@@ -38,6 +38,16 @@ where
     }
 }
 
+impl<A> IntoWhereStep for (A, TraversalBuilder)
+where
+    A: Into<String>,
+{
+    fn into_step(self) -> WhereStep {
+        WhereStep::new(vec![self.0.into().into(), self.1.bytecode.into()])
+    }
+}
+
+
 impl<A> IntoWhereStep for A
 where
     A: IntoPredicate,

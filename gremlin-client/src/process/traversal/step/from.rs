@@ -27,6 +27,12 @@ impl IntoFromStep for &str {
     }
 }
 
+impl IntoFromStep for Vec<&str> {
+    fn into_step(self) -> FromStep {
+        FromStep::new(self.into_iter().map(|val| val.into()).collect())
+    }
+}
+
 impl IntoFromStep for &Vertex {
     fn into_step(self) -> FromStep {
         FromStep::new(vec![self.into()])

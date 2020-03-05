@@ -1,5 +1,6 @@
 use crate::process::traversal::TraversalBuilder;
 use crate::structure::GValue;
+use crate::ToGValue;
 
 pub struct OrStep {
     params: Vec<GValue>,
@@ -39,12 +40,18 @@ impl IntoOrStep for Vec<TraversalBuilder> {
     }
 }
 
+impl<T> IntoOrStep for T where T: ToGValue {
+    fn into_step(self) -> OrStep {
+        OrStep::new(vec![self.to_gvalue()])
+    }
+}
+
 macro_rules! impl_into_or {
     ($n:expr) => {
         impl IntoOrStep for [TraversalBuilder; $n] {
             fn into_step(self) -> OrStep {
                 OrStep::new(
-                    self.into_iter()
+                    self.iter()
                         .map(|s| s.bytecode.clone().into())
                         .collect(),
                 )
