@@ -12,8 +12,9 @@ use crate::process::traversal::Bytecode;
 use crate::process::traversal::{GraphTraversal, TraversalBuilder};
 use crate::structure::GIDs;
 use crate::structure::Labels;
-use crate::structure::{Edge, GValue, Vertex};
+use crate::structure::{Edge, GValue, Vertex, T::Id};
 use crate::GremlinClient;
+use uuid::Uuid;
 
 #[derive(Clone)]
 pub struct GraphTraversalSource<A: Terminator<GValue>> {
@@ -76,7 +77,7 @@ impl<A: Terminator<GValue>> GraphTraversalSource<A> {
             label.into().0.into_iter().map(GValue::from).collect(),
         );
 
-        GraphTraversal::new(self.term.clone(), TraversalBuilder::new(code))
+        GraphTraversal::new(self.term.clone(), TraversalBuilder::new(code).property_t(Id, Uuid::new_v4().to_string()))
     }
 
     pub fn add_e<T>(&self, label: T) -> GraphTraversal<Edge, Edge, A>
