@@ -6,9 +6,9 @@ use std::hash::Hasher;
 
 #[derive(Debug, Clone)]
 pub struct Vertex {
-    id: GID,
-    label: String,
-    properties: HashMap<String, Vec<VertexProperty>>,
+    pub id: GID,
+    pub label: String,
+    pub properties: HashMap<String, Vec<VertexProperty>>,
 }
 
 impl Vertex {
